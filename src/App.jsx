@@ -42,9 +42,12 @@ const App = () => {
     setPreviousNumber('');
     setOperation('');
   };
-
+  const maxDigits = 12;
   const handleAddNumber = (number) => {
     setCurrentNumber((prev) => {
+      if (prev.length >= maxDigits) {
+        return prev;
+      }
       if (prev === '0' || prev === '-0') {
         return number;
       } else if (prev === '' && number === ',') {
@@ -112,7 +115,10 @@ const App = () => {
   return (
     <Container>
       <Content>
-        <Input value={currentNumber} />
+        <Input
+          value={currentNumber}
+          className={currentNumber === '' ? 'isEmpty' : ''}
+        />
         <Row>
           <Button label="C" onClick={handleClear} />
           <BackButton label="" onClick={handleRemoveLastDigit} />
@@ -142,7 +148,6 @@ const App = () => {
           <Button label="00" onClick={() => handleAddNumber('00')} />
           <Button label="," onClick={() => handleAddNumber(',')} />
           <Button label="=" onClick={handleCalculate} />{' '}
-          {/* Botão de igual para calcular a operação */}
         </Row>
       </Content>
     </Container>
